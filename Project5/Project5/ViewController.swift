@@ -70,29 +70,38 @@ class ViewController: UITableViewController {
         if isPossible(word: lowerAnswer) {
             if isOriginal(word: lowerAnswer) {
                 if isReal(word: lowerAnswer) {
-                    usedWords.insert(answer, at: 0)
+                    if isLong(word: lowerAnswer) {
                     
-                    let indexPath = IndexPath(row: 0, section: 0)
-                    tableView.insertRows(at: [indexPath], with: .automatic)
-                    
-                    return
+                        usedWords.insert(answer, at: 0)
+                        
+                        let indexPath = IndexPath(row: 0, section: 0)
+                        tableView.insertRows(at: [indexPath], with: .automatic)
+                        
+                        return
+                        
+                        } else {
+                            errorTitle = "Too short!"
+                            errorMessage = "Must be above 3 letters"
+                        }
+                    } else {
+                        errorTitle = "Word not recognized!"
+                        errorMessage = "You can't just make them up..."
+                    }
                 } else {
-                    errorTitle = "Word not recognized!"
-                    errorMessage = "You can't just make them up..."
+                    errorTitle = "Word already used"
+                    errorMessage = "Be more orignal ;)"
                 }
             } else {
-                errorTitle = "Word already used"
-                errorMessage = "Be more orignal ;)"
+                errorTitle = "Word not possible!"
+                errorMessage = "You can't spell that word from \(title!.lowercased())."
             }
-        } else {
-            errorTitle = "Word not possible!"
-            errorMessage = "You can't spell that word from \(title!.lowercased())."
+            
+            let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(ac, animated: true)
         }
-        
-        let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
-        present(ac, animated: true)
-    }
     
+    //compare if the word is possible
     func isPossible(word: String) -> Bool {
         guard var tempWord = title?.lowercased() else { return false }
         
@@ -107,15 +116,26 @@ class ViewController: UITableViewController {
         return true
     }
     
+    //compare if the word is original
     func isOriginal(word: String) -> Bool {
         return !usedWords.contains(word)
     }
     
+    //compare if the word is real
     func isReal(word: String) -> Bool {
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
         return misspelledRange.location == NSNotFound
+    }
+    
+    //compare if the word has more than 3 letters
+    func isLong(word: String) -> Bool {
+        if word.count > 3 {
+            return true
+        } else {
+            return false
+        }
     }
 }
 
