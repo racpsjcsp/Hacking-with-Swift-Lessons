@@ -75,7 +75,7 @@ class ViewController: UITableViewController {
                 if isReal(word: lowerAnswer) {
                     if isLong(word: lowerAnswer) {
                     
-                        usedWords.insert(answer, at: 0)
+                        usedWords.insert(lowerAnswer, at: 0)
                         
                         let indexPath = IndexPath(row: 0, section: 0)
                         tableView.insertRows(at: [indexPath], with: .automatic)
@@ -140,5 +140,39 @@ class ViewController: UITableViewController {
             return false
         }
     }
+    
+    //func showErrorMessage(word: String) -> Bool {
+    //    var errorTitle = String()
+    //    var errorMessage = String()
+    //
+    //    var ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
+    //
+    //    if isPossible(word: word) == false {
+    //        errorTitle = "Word not possible!"
+    //        errorMessage = "You can't spell that word from \(title!.lowercased())."
+    //        ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
+    //        ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+    //        present(ac, animated: true)
+    //        return false
+    //    } else if isOriginal(word: word) == false {
+    //        errorTitle = "Word already used"
+    //        errorMessage = "Be more orignal ;)"
+    //        present(ac, animated: true)
+    //        return false
+    //    } else if isReal(word: word) == false {
+    //        errorTitle = "Word not recognized!"
+    //        errorMessage = "You can't just make them up..."
+    //        present(ac, animated: true)
+    //        return false
+    //    } else if isLong(word: word) == false {
+    //        errorTitle = "Too short!"
+    //        errorMessage = "Must be above 3 letters"
+    //        present(ac, animated: true)
+    //        return false
+    //    } else {
+    //        return true
+    //    }
+    //}
 }
+
 
